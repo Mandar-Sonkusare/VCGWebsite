@@ -1,0 +1,685 @@
+<?php
+// config.php - Database configuration
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'vcg_database';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Handle form submission
+$message = '';
+$messageType = '';
+
+if ($_POST) {
+    try {
+        // Sanitize and validate input data
+        $fullName = trim($_POST['name'] ?? '');
+        $company = trim($_POST['company'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $serviceType = $_POST['service_type'] ?? '';
+        $projectBudget = $_POST['project_budget'] ?? '';
+        $projectBrief = trim($_POST['message'] ?? '');
+        
+        // Basic validation
+        $errors = [];
+        
+        if (empty($fullName)) {
+            $errors[] = "Full name is required";
+        }
+        
+        if (empty($email)) {
+            $errors[] = "Email is required";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Invalid email format";
+        }
+        
+        if (empty($serviceType)) {
+            $errors[] = "Service type is required";
+        }
+        
+        if (empty($projectBudget)) {
+            $errors[] = "Project budget is required";
+        }
+        
+        if (empty($projectBrief)) {
+            $errors[] = "Project brief is required";
+        }
+        
+        if (empty($errors)) {
+            // Insert data into database
+            $sql = "INSERT INTO contact_submissions (full_name, company, email, service_type, project_budget, project_brief, submission_date) 
+                    VALUES (:full_name, :company, :email, :service_type, :project_budget, :project_brief, NOW())";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':full_name' => $fullName,
+                ':company' => $company,
+                ':email' => $email,
+                ':service_type' => $serviceType,
+                ':project_budget' => $projectBudget,
+                ':project_brief' => $projectBrief
+            ]);
+            
+            $message = "Thank you! Your message has been sent successfully. We'll get back to you soon.";
+            $messageType = 'success';
+            
+            // Clear form data after successful submission
+            $_POST = [];
+            
+        } else {
+            $message = "Please fix the following errors: " . implode(", ", $errors);
+            $messageType = 'error';
+        }
+        
+    } catch(PDOException $e) {
+        $message = "Sorry, there was an error processing your request. Please try again.";
+        $messageType = 'error';
+        error_log("Database error: " . $e->getMessage());
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <title>VCG | Vikal Consulting Group</title>
+
+  <!--Meta For No Index-->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+  
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Stylesheets -->
+  <link href="css/main.css" rel="stylesheet" />
+  
+  <!--Favicon-->
+  <link rel="icon" type="image/png" href="images/white_logo.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="images/white_logo.png" />
+  <link rel="shortcut icon" href="images/white_logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/white_logo.png" />
+  <link rel="manifest" href="images/white_logo.png" />
+  
+  <style>
+    .alert {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+    .alert-error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body >
+
+<header id="header" class="w-full fixed z-[9999]">
+  <div
+    class="w-full fixed h-[155px] top-0 z-[21] pointer-events-none gradient-shadow"
+  >
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px)"
+    ></div>
+    <div
+      class="absolute inset-0 pointer-events-none rounded-[inherit]"
+      style="
+        mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 1) 16.666666666666664%,
+          rgba(255, 255, 255, 1) 33.33333333333333%,
+          rgba(255, 255, 255, 0) 50%
+        );
+        -webkit-mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 1) 16.666666666666664%,
+          rgba(255, 255, 255, 1) 33.33333333333333%,
+          rgba(255, 255, 255, 0) 50%
+        );
+        backdrop-filter: blur(-7px);
+        -webkit-backdrop-filter: blur(-7px);
+      "
+    ></div>
+    <div
+      class="absolute inset-0 pointer-events-none rounded-[inherit]"
+      style="
+        mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 16.666666666666664%,
+          rgba(255, 255, 255, 1) 33.33333333333333%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 0) 66.66666666666666%
+        );
+        -webkit-mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 16.666666666666664%,
+          rgba(255, 255, 255, 1) 33.33333333333333%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 0) 66.66666666666666%
+        );
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+      "
+    ></div>
+    <div
+      class="absolute inset-0 pointer-events-none rounded-[inherit]"
+      style="
+        mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 33.33333333333333%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 1) 66.66666666666666%,
+          rgba(255, 255, 255, 0) 83.33333333333333%
+        );
+        -webkit-mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 33.33333333333333%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 1) 66.66666666666666%,
+          rgba(255, 255, 255, 0) 83.33333333333333%
+        );
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      "
+    ></div>
+    <div
+      class="absolute inset-0 pointer-events-none rounded-[inherit]"
+      style="
+        mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 1) 66.66666666666666%,
+          rgba(255, 255, 255, 1) 83.33333333333333%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 1) 66.66666666666666%,
+          rgba(255, 255, 255, 1) 83.33333333333333%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      "
+    ></div>
+    <div
+      class="absolute inset-0 pointer-events-none rounded-[inherit]"
+      style="
+        mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 66.66666666666666%,
+          rgba(255, 255, 255, 1) 83.33333333333333%,
+          rgba(255, 255, 255, 1) 100%,
+          rgba(255, 255, 255, 0) 116.66666666666666%
+        );
+        -webkit-mask-image: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0) 66.66666666666666%,
+          rgba(255, 255, 255, 1) 83.33333333333333%,
+          rgba(255, 255, 255, 1) 100%,
+          rgba(255, 255, 255, 0) 116.66666666666666%
+        );
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      "
+    ></div>
+  </div>
+  
+  <nav class="z-[1000] w-full fixed top-0 px-5 sm:px-8 pt-1 sm:pt-5 nav-top">
+  <div class="flex justify-center">
+    <a href="index.php">
+      <img
+        class="max-h-[150px] w-[150px] h-[150px] sm:w-[68px] sm:h-[68px] inline-block dark:hidden"
+        src="images/black_header_logo.png"
+        alt="logo"
+      />
+      <img
+        class="max-h-[150px] w-[150px] h-[150px] sm:w-[68px] sm:h-[68px] dark:inline-block hidden"
+        src="images/white_header_logo.png"
+        alt="logo"
+      />
+    </a>
+  </div>
+</nav>
+</header>
+
+<div
+  class="menu-overflow fixed z-[9999] bg-[rgba(10,10,10,0.95)] bg-opacity-60 backdrop-blur-[25px] w-full h-full pointer-events-none"
+></div>
+
+<!-- Cursor Pointer -->
+<div class="pointer"></div>
+
+<!-- Dark Mode toggle -->
+<div class="toggle-button fixed right-10 bottom-10 z-[1000]">
+  <button
+    id="theme-toggle"
+    type="button"
+    class="text-secondary bg-black/90 dark:bg-white/90 rounded-[1px] backdrop-blur-xl dark:text-white focus:outline-none focus:ring-0 focus:ring-gray-200 w-[44px] h-[44px] flex justify-center items-center"
+  >
+    <svg
+      data-testid="geist-icon"
+      id="theme-toggle-dark-icon"
+      class="hidden w-5 h-5"
+      fill="#fff"
+      stroke-linejoin="round"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M10.5 0.25V1V1.5H11L11.75 1.5V3H11H10.5V3.5V4.25H9V3.5V3H8.5H7.75V1.5H8.5H9V1V0.25H10.5ZM3.25514 2.75496C2.33413 3.53491 1.75 4.69972 1.75 6C1.75 8.34721 3.65279 10.25 6 10.25C7.30029 10.25 8.4651 9.66587 9.24505 8.74485C9.16377 8.74827 9.08207 8.74999 9 8.74999C5.82436 8.74999 3.25 6.17563 3.25 2.99999C3.25 2.91792 3.25172 2.83623 3.25514 2.75496ZM0.25 6C0.25 3.51072 1.83142 1.39271 4.042 0.592193L5.00256 1.55275C4.83933 2.00347 4.75 2.49047 4.75 2.99999C4.75 5.3472 6.65279 7.24999 9 7.24999C9.50953 7.24999 9.99653 7.16065 10.4473 6.99743L11.4078 7.95798C10.6073 10.1686 8.48929 11.75 6 11.75C2.82436 11.75 0.25 9.17564 0.25 6Z"
+        fill="#fff"
+        transform="translate(2.25, 2.25)"
+      ></path>
+    </svg>
+    <svg
+      id="theme-toggle-light-icon"
+      class="hidden w-5 h-5"
+      fill="#000"
+      viewBox="0 0 16 16"
+      data-testid="geist-icon"
+      stroke-linejoin="round"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M7.75 1V0.25H6.25V1V1.25V2H7.75V1.25V1ZM7 9C8.10457 9 9 8.10457 9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9ZM7 10.5C8.933 10.5 10.5 8.933 10.5 7C10.5 5.067 8.933 3.5 7 3.5C5.067 3.5 3.5 5.067 3.5 7C3.5 8.933 5.067 10.5 7 10.5ZM7.75 12V12.75V13V13.75H6.25V13V12.75V12H7.75ZM12 6.25H12.75H13H13.75V7.75H13H12.75H12V6.25ZM1 6.25H0.25V7.75H1H1.25H2V6.25H1.25H1ZM10.0052 2.93414L10.5355 2.40381L10.7123 2.22703L11.2426 1.6967L12.3033 2.75736L11.773 3.28769L11.5962 3.46447L11.0659 3.9948L10.0052 2.93414ZM2.22703 10.7123L1.6967 11.2426L2.75736 12.3033L3.28769 11.773L3.46447 11.5962L3.9948 11.0659L2.93414 10.0052L2.40381 10.5355L2.22703 10.7123ZM2.93414 3.9948L2.40381 3.46447L2.22703 3.28769L1.6967 2.75736L2.75736 1.6967L3.28769 2.22703L3.46447 2.40381L3.9948 2.93414L2.93414 3.9948ZM10.7123 11.773L11.2426 12.3033L12.3033 11.2426L11.773 10.7123L11.5962 10.5355L11.0659 10.0052L10.0052 11.0659L10.5355 11.5962L10.7123 11.773Z"
+        fill="#000"
+        transform="translate(1.25, 1.25)"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+
+<main class="lg:mb-[600px] relative z-10 bg-backgroundBody dark:bg-dark">
+    <!--=====================================
+    Contact Page Header Section
+    ======================================-->
+    <section
+    class="pt-[120px] md:pt-[180px] pb-20 sm:pb-32 md:pb-36 lg:pb-36 xl:pb-[100px] relative overflow-hidden"
+    >
+    <!-- Gradient Background -->
+    <div
+        id="hero-gradient-wrapper"
+        class="absolute w-[44%] lg:w-[40%] h-[44%] lg:h-[40%] top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 -z-10 blur-[60px] max-sm:scale-125 md:scale-[0.72]"
+    >
+        <img
+        src="images/hero-gradient-background.png"
+        alt="hero-gradient-background"
+        id="hero-gradient"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        />
+    </div>
+
+    <!-- Header Content -->
+    <div class="container">
+        <div class="text-center reveal-me">
+        <h1 class="mt-3 lg:mt-8 mb-4 md:mb-7">Let's Work Together</h1>
+        <p class="">From high-impact websites to data-driven campaigns, <br> we craft solutions that connect, convert, and scale.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <div class="container reveal-me">
+        <div class="text-center">
+        <!--=====================================
+                Contact Form Section
+            ======================================-->
+            <section class="pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]">
+            <div class="container">
+            
+                <?php if (!empty($message)): ?>
+                <div class="alert alert-<?php echo $messageType; ?>">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+                <?php endif; ?>
+                
+                <!-- Contact Form -->
+                <form
+                class="grid grid-cols-1 md:grid-cols-2 gap-[30px] max-w-[800px] mx-auto reveal-me"
+                method="POST"
+                action=""
+                >
+                <!-- Full Name Field -->
+                <div class="md:col-span-full">
+                    <label
+                    for="name"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Full Name *
+                    </label>
+                    <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter your full name"
+                    value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>"
+                    class="py-4 pl-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3"
+                    required
+                    />
+                </div>
+
+                <!-- Company Field -->
+                <div>
+                    <label
+                    for="company"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Company Name
+                    </label>
+                    <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    placeholder="Your company name"
+                    value="<?php echo htmlspecialchars($_POST['company'] ?? ''); ?>"
+                    class="py-4 pl-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3"
+                    />
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label
+                    for="email"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Work Email *
+                    </label>
+                    <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="name@company.com"
+                    value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
+                    class="py-4 pl-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3"
+                    required
+                    />
+                </div>
+
+                <!-- Service Selection -->
+                <div class="relative">
+                    <label
+                    for="service_type"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Service Type *
+                    </label>
+                    <select
+                    name="service_type"
+                    id="service_type"
+                    class="py-4 px-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3 appearance-none indent-px text-ellipsis"
+                    required
+                    >
+                    <option value="">Select Service Type</option>
+                    <option value="UX Design" <?php echo (($_POST['service_type'] ?? '') == 'UX Design') ? 'selected' : ''; ?>>UX Design</option>
+                    <option value="Product Design" <?php echo (($_POST['service_type'] ?? '') == 'Product Design') ? 'selected' : ''; ?>>Product Design</option>
+                    <option value="Brand Identity" <?php echo (($_POST['service_type'] ?? '') == 'Brand Identity') ? 'selected' : ''; ?>>Brand Identity</option>
+                    <option value="Design System" <?php echo (($_POST['service_type'] ?? '') == 'Design System') ? 'selected' : ''; ?>>Design System</option>
+                    </select>
+                    <span class="absolute right-5 top-1/2 translate-y-1/3">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="inline dark:hidden"
+                    >
+                        <path
+                        d="M6 9L12 15L18 9"
+                        stroke="black"
+                        stroke-opacity="0.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        class="hidden dark:inline"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                        d="M6 9L12 15L18 9"
+                        stroke="white"
+                        stroke-opacity="0.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                    </span>
+                </div>
+
+                <!-- Budget Range -->
+                <div class="relative">
+                    <label
+                    for="project_budget"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Project Budget *
+                    </label>
+                    <select
+                    name="project_budget"
+                    id="project_budget"
+                    class="py-4 px-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3 appearance-none indent-px text-ellipsis"
+                    required
+                    >
+                    <option value="">Select Budget Range</option>
+                    <option value="$10k - $25k" <?php echo (($_POST['project_budget'] ?? '') == '$10k - $25k') ? 'selected' : ''; ?>>$10k - $25k</option>
+                    <option value="$25k - $50k" <?php echo (($_POST['project_budget'] ?? '') == '$25k - $50k') ? 'selected' : ''; ?>>$25k - $50k</option>
+                    <option value="$50k - $100k" <?php echo (($_POST['project_budget'] ?? '') == '$50k - $100k') ? 'selected' : ''; ?>>$50k - $100k</option>
+                    <option value="$100k+" <?php echo (($_POST['project_budget'] ?? '') == '$100k+') ? 'selected' : ''; ?>>$100k+</option>
+                    </select>
+                    <span class="absolute right-5 top-1/2 translate-y-1/3">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="inline dark:hidden"
+                    >
+                        <path
+                        d="M6 9L12 15L18 9"
+                        stroke="black"
+                        stroke-opacity="0.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="hidden dark:inline"
+                    >
+                        <path
+                        d="M6 9L12 15L18 9"
+                        stroke="white"
+                        stroke-opacity="0.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        />
+                    </svg>
+                    </span>
+                </div>
+
+                <!-- Project Details -->
+                <div class="md:col-span-full">
+                    <label
+                    for="message"
+                    class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
+                    >
+                    Project Brief *
+                    </label>
+                    <textarea
+                    name="message"
+                    id="message"
+                    rows="5"
+                    placeholder="Tell us about your project goals and timeline"
+                    class="py-4 pl-5 bg-white dark:bg-dark focus:outline-none focus:border-primary border dark:border-dark w-full text-colorText text-xl leading-[1.4] tracking-[0.4px] mt-3"
+                    required
+                    ><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-span-full mx-auto sm:mt-14">
+                    <button type="submit" class="rv-button rv-button-primary">
+                    <div class="rv-button-top">
+                        <span>Send Message</span>
+                    </div>
+                    <div class="rv-button-bottom">
+                        <span>Send Message</span>
+                    </div>
+                    </button>
+                </div>
+                </form>
+            </div>
+            </section>
+        </div>
+    </div>
+    </section>
+
+</main>
+
+<!--=====================================
+   Footer Section
+======================================-->
+<footer
+  class="relative lg:fixed lg:-z-10 bg-black bottom-0 w-full pt-20 sm:pt-24 md:pt-36 pb-24 lg:pb-48 overflow-hidden"
+>
+  <div class="container">
+    <!-- Footer Content Grid -->
+    <div
+      class="col-span-12 justify-center relative z-10"
+    >
+      <!-- Repeat this block up to 12 times -->
+      <div class="pr-8">
+        <h5
+          class="uppercase text-sm font-satoshi text-white tracking-[3px] mb-4 sm:mb-8 font-bold" style="text-align: center;"
+        >
+          Reach Us
+        </h5>
+        <p class="text-white text-sm max-md:font-semibold mb-5" style="text-align: center;">
+          Book a quick 30 min meeting where we discuss if our offer would work for your case
+        </p>
+        <!-- Meeting Scheduler Card -->
+        <div
+          class="flex p-4 group bg-primary bg-opacity-30 gap-4 justify-between items-center backdrop-blur-2xl"
+        >
+          <img class="h-[55px] w-auto" src="images/white_logo.png" alt="logo" />
+          <div>
+            <h6 class="text-sm font-satoshi text-white font-bold">
+              Schedule a Free Meeting
+            </h6>
+            <p class="text-sm text-white">Few spots left this month</p>
+          </div>
+          <a
+            href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ20ChKXOhWn0LGPFXDxOHx0LUY5SOZI-tKYy2zFHpTmCN_3YLuqKaA0EPP9J_DVsDhtH3_CudPy?gv=true"
+            target="_blank"
+          >
+            <figure
+              class="bg-primary w-[55px] h-[55px] cursor-pointer relative overflow-hidden"
+            >
+              <img
+                src="images/icons/arrow-Icon.svg"
+                alt="Arrow Icon"
+                class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 group-hover:-translate-y-12 group-hover:translate-x-8 transition-all duration-500 opacity-100 group-hover:opacity-0"
+              />
+              <img
+                src="images/icons/arrow-Icon.svg"
+                alt="Arrow Icon"
+                class="absolute translate-y-12 -translate-x-4 transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-[19px] group-hover:translate-y-5"
+              />
+            </figure>
+          </a>
+        </div>
+        
+        <p class="text-sm max-md:font-semibold mt-10" style="text-align: center;">
+          <a href="terms.php" style="margin-right: 10px;color: aqua;">Terms & Condition</a>
+          <a href="privacy.php" style="color: aqua;">Privacy Policy</a>
+        </p>
+      </div>
+      <!-- End of Repeat -->
+    </div>
+  </div>
+
+  <!-- Footer Background Text -->
+  <div class="absolute w-full bottom-0">
+    <h5
+      class="w-full bottom-0 absolute footer-text text-center font-satoshi font-extrabold text-4xl xs:text-5xl sm:text-6xl md:text-[88px] lg:text-[120px] xl:text-[150px] 2xl:text-[170px] tracking-widest text-nowrap translate-y-[30%] left-1/2 -translate-x-1/2"
+    >
+      VCG
+    </h5>
+  </div>
+</footer>
+
+<!-- Mark up for Script Section-->
+<script src="js/lib/imagesloaded.pkgd.min.js"></script>
+<script src="js/lib/gsap.min.js"></script>
+<script src="js/lib/ScrollTrigger.min.js"></script>
+<script src="js/lib/lenis.min.js"></script>
+<script src="js/lib/split-types.min.js"></script>
+<script src="js/lib/matter.min.js"></script>
+<script src="js/career-tabs.js"></script>
+<script src="js/lib/swiper.min.js"></script>
+<script src="js/lib/headroom.min.js"></script>
+<script src="js/lib/vanila-marquee.min.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+  const tabs = document.querySelectorAll(".tab-member");
+  const profileImage = document.querySelector(".our-team-details figure img");
+  const profileBio = document.querySelector(".our-team-details > div > div + div p");
+
+  const twitterIcon = document.querySelector('a[href*="x.com"]');
+  const facebookIcon = document.querySelector('a[href*="facebook.com"]');
+  const youtubeIcon = document.querySelector('a[href*="youtube.com"]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      const image = tab.dataset.image;
+      const bio = tab.dataset.bio;
+      const twitter = tab.dataset.twitter;
+      const facebook = tab.dataset.facebook;
+      const youtube = tab.dataset.youtube;
+
+      profileImage.src = image;
+      profileBio.textContent = bio;
+
+      twitterIcon.href = twitter;
+      facebookIcon.href = facebook;
+      youtubeIcon.href = youtube;
+    });
+  });
+</script>
+
+</body>
+</html>
