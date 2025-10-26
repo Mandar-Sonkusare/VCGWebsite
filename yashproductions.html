@@ -16,6 +16,7 @@
 
     <!-- Stylesheets -->
     <link href="css/main.css" rel="stylesheet" />
+    <link href="css/navbar.css" rel="stylesheet" />
 
     <!--Favicon-->
     <link
@@ -34,22 +35,54 @@
     <link rel="manifest" href="images/site.webmanifest" />
   </head>
   <body>
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: #000000; z-index: 9999; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
-      <!-- Logo -->
-      <a href="index.html" style="display: flex; align-items: center;">
-        <img src="images/white_header_logo.png" alt="logo" style="height: 40px; width: auto; display: block;">
-      </a>
-      
-      <!-- Navigation Menu -->
-      <div style="display: flex; align-items: center; gap: 2rem;">
-        <a href="index.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">Home</a>
-        <a href="about.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">About</a>
-        <a href="services.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">Services</a>
-        <a href="blog.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">Blog</a>
-        <a href="projects.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">Projects</a>
-        <a href="company.html" style="color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500;">Company</a>
-      </div>
-    </div>
+
+    <!-- Modern Clean Navbar -->
+    <header class="navbar-header">
+      <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-container">
+          <!-- Logo -->
+          <div class="navbar-brand">
+            <a href="index.html" class="navbar-logo" aria-label="Home">
+              <img src="images/black_header_logo.png" alt="Logo" class="navbar-logo-img light-logo" />
+              <img src="images/white_header_logo.png" alt="Logo" class="navbar-logo-img dark-logo" />
+            </a>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="navbar-nav desktop-nav">
+            <ul class="navbar-menu" role="menubar" id="navbar-menu">
+              <!-- Menu items will be dynamically populated -->
+            </ul>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button class="navbar-toggle" aria-label="Toggle navigation menu" aria-expanded="false" id="navbar-toggle">
+            <span class="navbar-toggle-line"></span>
+            <span class="navbar-toggle-line"></span>
+            <span class="navbar-toggle-line"></span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="navbar-mobile-overlay" aria-hidden="true" id="navbar-mobile-overlay">
+          <div class="navbar-mobile-content">
+            <div class="navbar-mobile-header">
+              <button class="navbar-mobile-close" aria-label="Close navigation menu" id="navbar-mobile-close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="navbar-mobile-menu">
+              <ul class="navbar-mobile-list" role="menubar" id="navbar-mobile-menu">
+                <!-- Mobile menu items will be dynamically populated -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
 
 
 
@@ -2487,8 +2520,38 @@
     <script src="js/lib/matter.min.js"></script>
     <script src="js/career-tabs.js"></script>
     <script src="js/lib/swiper.min.js"></script>
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle">
+      <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle dark mode">
+        <svg class="theme-icon theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="theme-icon theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mark up for Script Section-->
+    <script src="js/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="js/lib/gsap.min.js"></script>
+    <script src="js/lib/ScrollTrigger.min.js"></script>
+    <script src="js/lib/lenis.min.js"></script>
+    <script src="js/lib/split-types.min.js"></script>
+    <script src="js/lib/matter.min.js"></script>
+    <script src="js/career-tabs.js"></script>
+    <script src="js/lib/swiper.min.js"></script>
     <script src="js/lib/headroom.min.js"></script>
     <script src="js/lib/vanila-marquee.min.js"></script>
+    <script src="js/navbar.js"></script>
     <script src="js/script.js"></script>
 
   </body>
