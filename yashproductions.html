@@ -17,6 +17,115 @@
     <!-- Stylesheets -->
     <link href="css/main.css" rel="stylesheet" />
     <link href="css/navbar.css" rel="stylesheet" />
+    
+    <style>
+      /* Video Modal Styles */
+      .video-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .video-modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      
+      .video-modal-content {
+        position: relative;
+        width: 90%;
+        max-width: 1000px;
+        max-height: 90%;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      }
+      
+      .video-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      
+      .video-modal-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+      
+      .video-container {
+        width: 100%;
+        aspect-ratio: 16/9;
+        position: relative;
+      }
+      
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .video-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+      }
+      
+      .placeholder-content h3 {
+        margin: 20px 0 10px 0;
+        font-size: 24px;
+        font-weight: 600;
+      }
+      
+      .placeholder-content p {
+        margin: 0;
+        opacity: 0.8;
+        font-size: 16px;
+      }
+      
+      /* Animation */
+      .video-modal {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.3s ease;
+      }
+      
+      .video-modal.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
 
     <!--Favicon-->
     <link
@@ -133,6 +242,44 @@
             As a agency we are working on client projects, official Webflow
             Templates and cloneables for the Webflow community.
           </p>
+
+          <!-- CTA Buttons -->
+          <ul
+            class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 list-none mt-10 md:mt-14 xl:mt-[76px] max-lg:mx-auto"
+          >
+            <!-- Primary CTA Button -->
+            <li
+              class="block md:inline-block w-[90%] mx-auto md:ml-auto md:mr-0 md:w-auto"
+            >
+              <a
+                href="contact.html"
+                class="rv-button rv-button-secondary block md:inline-block"
+              >
+                <div class="rv-button-top">
+                  <span>Start a Project</span>
+                </div>
+                <div class="rv-button-bottom">
+                  <span>Start a Project</span>
+                </div>
+              </a>
+            </li>
+            <!-- Secondary CTA Button -->
+            <li
+              class="block md:inline-block w-[90%] mx-auto md:mr-auto md:ml-0 md:w-auto"
+            >
+              <button
+                onclick="openVideoModal()"
+                class="rv-button rv-button-white block md:inline-block cursor-pointer"
+              >
+                <div class="rv-button-top">
+                  <span>Watch Showreel</span>
+                </div>
+                <div class="rv-button-bottom">
+                  <span>Watch Showreel</span>
+                </div>
+              </button>
+            </li>
+          </ul>
         </div>
 
         <!-- skew Marquee Start -->
@@ -381,7 +528,7 @@
                   <p
                     class="text-base md:text-xl md:leading-[1.4] md:tracking-[0.4px] mt-2 pr-[2px] max-w-lg"
                   >
-                    Creating a remarkable experience for every individual
+                    Uncovering what your users want and turn insights into conversion-driven designs.
                   </p>
                 </h3>
                 <div class="accordion-header-iconV5">
@@ -411,52 +558,35 @@
                 </div>
               </div>
               <div
-                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-start md:gap-14 md:ml-2"
+                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-center md:gap-14 md:ml-2"
               >
                 <ul class="[&>*:not(:last-child)]:mb-1">
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    User Research & Market Analysis
+                    User & market research
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    Competitor analysis
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Concept Ideation
+                    UX audits & usability tests
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
-                <ul class="[&>*:not(:last-child)]:mb-1">
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    User Research & Market Analysis
+                    Wireframes & prototypes
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    A/B testing insights
                   </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Concept Ideation
-                  </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
+                
               </div>
             </div>
             <div
@@ -472,8 +602,7 @@
                   <p
                     class="text-base md:text-xl md:leading-[1.4] md:tracking-[0.4px] mt-2 pr-[2px] max-w-lg"
                   >
-                    Highly skilled product designers whose focus goes beyond UI
-                    & UX
+                    Designing sleek, high-performing digital products built for growth.
                   </p>
                 </h3>
                 <div class="accordion-header-iconV5">
@@ -503,52 +632,35 @@
                 </div>
               </div>
               <div
-                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-start md:gap-14 md:ml-2"
+                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-center md:gap-14 md:ml-2"
               >
                 <ul class="[&>*:not(:last-child)]:mb-1">
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    User Research & Market Analysis
+                    Website & app UI design
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    End-to-end user flows
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Concept Ideation
+                    Design systems for scalability
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
-                <ul class="[&>*:not(:last-child)]:mb-1">
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    User Research & Market Analysis
+                    Developer handoff files
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    Continuous design iterations
                   </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Concept Ideation
-                  </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
+                
               </div>
             </div>
             <div
@@ -564,7 +676,7 @@
                   <p
                     class="text-base md:text-xl md:leading-[1.4] md:tracking-[0.4px] mt-2 pr-[2px] max-w-lg"
                   >
-                    Delivering excellence in every user experience
+                    Building bold visual identities that make your brand unforgettable.
                   </p>
                 </h3>
                 <div class="accordion-header-iconV5">
@@ -594,52 +706,35 @@
                 </div>
               </div>
               <div
-                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-start md:gap-14 md:ml-2"
+                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-center md:gap-14 md:ml-2"
               >
                 <ul class="[&>*:not(:last-child)]:mb-1">
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    User Research & Market Analysis
+                    Branding & logo design
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    UI & marketing creatives
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Concept Ideation
+                    Landing page design
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
-                <ul class="[&>*:not(:last-child)]:mb-1">
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    User Research & Market Analysis
+                    Social & display ad graphics
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    Cross-platform style consistency
                   </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Concept Ideation
-                  </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
+                
               </div>
             </div>
             <div
@@ -655,7 +750,7 @@
                   <p
                     class="text-base md:text-xl md:leading-[1.4] md:tracking-[0.4px] mt-2 pr-[2px] max-w-lg"
                   >
-                    Creating a remarkable experience for every individual
+                    Creating cinematic videos and 3D visuals that stop the scroll.
                   </p>
                 </h3>
                 <div class="accordion-header-iconV5">
@@ -685,52 +780,35 @@
                 </div>
               </div>
               <div
-                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-start md:gap-14 md:ml-2"
+                class="accordion-body px-14 duration-300 faq-body-transition h-0 flex flex-col md:flex-row justify-center md:gap-14 md:ml-2"
               >
                 <ul class="[&>*:not(:last-child)]:mb-1">
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    User Research & Market Analysis
+                    Storyboarding & scripting
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    Motion graphics & animation
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Concept Ideation
+                    Product 3D renders
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
-                <ul class="[&>*:not(:last-child)]:mb-1">
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    User Research & Market Analysis
+                    Short-form ad videos (6s / 15s / 30s / 60s)
                   </li>
                   <li
                     class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
                   >
-                    Prototyping
+                    Editing, VFX & sound design
                   </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Concept Ideation
-                  </li>
-                  <li
-                    class="list-disc text-colorText text-[17px] leading-[1.5] tracking-[0.36px]"
-                  >
-                    Sketching & Wireframing
-                  </li>
-                </ul>
+                
               </div>
             </div>
           </div>
@@ -2266,7 +2344,7 @@
                 for="name"
                 class="text-2xl leading-[1.2] tracking-[-0.48px] text-[#000000b3] dark:text-dark-100"
               >
-                Your Data
+                Contact Details
               </label>
               <input
                 type="text"
@@ -2414,10 +2492,10 @@
               type="submit"
             >
               <div class="rv-button-top !w-full !text-center">
-                <span class="!font-normal"> Submit Message</span>
+                <span class="!font-normal"> Request Proposal</span>
               </div>
               <div class="rv-button-bottom !w-full !text-center">
-                <span class="!font-normal"> Submit Message</span>
+                <span class="!font-normal"> Request Propasal</span>
               </div>
             </a>
           </form>
@@ -2520,6 +2598,37 @@
     <script src="js/lib/matter.min.js"></script>
     <script src="js/career-tabs.js"></script>
     <script src="js/lib/swiper.min.js"></script>
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal" style="display: none;">
+      <div class="video-modal-overlay" onclick="closeVideoModal()"></div>
+      <div class="video-modal-content">
+        <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="video-container">
+          <!-- Placeholder for video - replace with actual video when ready -->
+          <div class="video-placeholder">
+            <div class="placeholder-content">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <polygon points="5,3 19,12 5,21"></polygon>
+              </svg>
+              <h3>Showreel Video</h3>
+              <p>Video placeholder - replace with actual showreel video</p>
+            </div>
+          </div>
+          <!-- Uncomment and replace with actual video when ready
+          <video controls autoplay>
+            <source src="path/to/your/showreel.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          -->
+        </div>
+      </div>
+    </div>
+
     <!-- Dark Mode Toggle -->
     <div class="theme-toggle">
       <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle dark mode">
@@ -2553,6 +2662,47 @@
     <script src="js/lib/vanila-marquee.min.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/script.js"></script>
+
+    <script>
+      // Video Modal Functions
+      function openVideoModal() {
+        const modal = document.getElementById('video-modal');
+        modal.style.display = 'flex';
+        // Add active class after a small delay for animation
+        setTimeout(() => {
+          modal.classList.add('active');
+        }, 10);
+        
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeVideoModal() {
+        const modal = document.getElementById('video-modal');
+        modal.classList.remove('active');
+        
+        // Hide modal after animation completes
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 300);
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // If there's a video playing, pause it
+        const video = modal.querySelector('video');
+        if (video) {
+          video.pause();
+        }
+      }
+      
+      // Close modal when pressing Escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeVideoModal();
+        }
+      });
+    </script>
 
   </body>
 </html>
