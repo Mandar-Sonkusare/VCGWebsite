@@ -5942,4 +5942,22 @@ to{
     border-right-width: 1px;
   }
 }
+/* Services: stack title above description (all screen sizes) */
+.accordion-header h3 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0.5rem;                /* spacing between title and description */
+}
+
+.accordion-header h3 > span:first-child {
+  width: 100% !important;
+}
+
+.accordion-header h3 > p {
+  width: 100% !important;
+  margin-top: 0 !important;   /* remove any top margin from utilities */
+}
+
+
 /*# sourceMappingURL=maps/main.css.map */
