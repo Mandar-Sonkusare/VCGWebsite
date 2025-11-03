@@ -10198,3 +10198,97 @@ button[type="submit"]:not(.rv-button) {
   border-radius: 50%;
   /* Already rounded, but ensuring consistency */
 }
+.marquee-container,
+.marquee-reverse-container {
+  padding: 0;
+  line-height: 0;
+}
+
+.marquee-container {
+  margin-bottom: 30px !important; /* gap below first marquee */
+}
+
+.marquee-reverse-container {
+  margin-top: 30px !important; /* ensures same space above second marquee */
+}
+
+/* Ensure images display cleanly */
+.marquee-container img,
+.marquee-reverse-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+/* Service Cards Hover Effects */
+.service-card {
+  cursor: pointer;
+  transform-origin: center;
+}
+
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px rgba(12, 229, 216, 0.2);
+  border-color: rgba(12, 229, 216, 0.3);
+}
+
+.dark .service-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(12, 229, 216, 0.3);
+  border-color: rgba(12, 229, 216, 0.4);
+}/* Fix 
+for service cards overflow on edges */
+.grid {
+  overflow: hidden;
+}/* Servi
+ce grid container padding fix */
+.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+  padding: 20px;
+  margin: -20px;
+}
+/* Cle
+an fix for service card overflow */
+.max-w-\[1170px\] .grid {
+  padding: 30px !important;
+  margin: -30px !important;
+}/* Ma
+ke service cards more rounded */
+.service-card {
+  border-radius: 2rem !important; /* Extra rounded corners */
+}/* Make sub
+-service tags more visible */
+.service-card span {
+  background-color: #f3f4f6 !important; /* Light gray background */
+  border: 1px solid #e5e7eb !important; /* Subtle border */
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.dark .service-card span {
+  background-color: #374151 !important; /* Dark gray for dark mode */
+  border: 1px solid #4b5563 !important;
+  color: #f9fafb !important;
+}
+
+.service-card span:hover {
+  background-color: #0ce5d8 !important; /* Brand color on hover */
+  color: #000 !important;
+  transform: scale(1.05);
+}/* Subtle
+ squircle styling - border only */
+.service-card span {
+  background-color: transparent !important;
+  border: 1px solid #d1d5db !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.dark .service-card span {
+  background-color: transparent !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.service-card span:hover {
+  background-color: #0ce5d8 !important;
+  color: #000 !important;
+  transform: scale(1.05);
+}
