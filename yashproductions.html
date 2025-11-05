@@ -350,7 +350,7 @@
       </section>
 
       <section
-        class="pt-14 md:pt-16 lg:pt-[88px] xl:pt-[100px] pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]"
+        class="our-journey pt-14 md:pt-16 lg:pt-[88px] xl:pt-[100px] pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px]"
       >
         <div class="container">
           <div class="text-center mb-8 md:mb-20">
@@ -359,18 +359,22 @@
             </div>
             <h2 class="text-appear">Our Creative Journey</h2>
           </div>
-          <!-- Process Section  -->
+          <!-- Process Section -->
+          <!-- To change the image: update src attribute in .our-journey__image img below -->
+          <!-- To modify steps: update content in .our-journey__step items below -->
 
-          <div class="flex flex-col md:flex-row gap-20 reveal-me">
-            <figure class="sticky top-7">
-              <img src="images/process-img-01.png" alt="Process Images " />
+          <div class="our-journey__wrapper flex flex-col md:flex-row gap-20">
+            <figure class="our-journey__image sticky">
+              <img src="images/process-img-01.png" alt="Process Images" />
             </figure>
 
-            <div>
+            <div class="our-journey__steps-container">
               <ul
-                class="relative space-y-10 lg:space-y-28 xl:space-y-[170px] md:border-l border-secondary dark:border-dark"
+                class="our-journey__steps relative space-y-10 lg:space-y-28 xl:space-y-[170px]"
+                role="list"
+                aria-label="Our creative journey steps"
               >
-                <li class="max-w-max px-10">
+                <li class="our-journey__step max-w-max px-10" role="listitem">
                   <div
                     class="absolute left-0 md:-left-11 lg:-left-[52px] bg-black text-white text-lg font-bold rounded-full px-3.5 lg:px-6 py-5 lg:py-8 flex items-center justify-center md:border-[18px] border-white dark:border-[#151515]"
                   >
@@ -381,15 +385,17 @@
                     </span>
                   </div>
                   <div class="ml-[30px]">
-                    <h3 class="">Book a Call</h3>
+                    <h3 class="our-journey__step-heading" tabindex="0">
+                      Book a Call
+                    </h3>
                     <p class="max-w-[483px] mt-1 sm:mt-3 md:mt-5">
                       Choose a date and time to book a discovery session, during
-                      which we’ll define the project objectives, timeline, and
+                      which we'll define the project objectives, timeline, and
                       budget.
                     </p>
                   </div>
                 </li>
-                <li class="max-w-max px-10">
+                <li class="our-journey__step max-w-max px-10" role="listitem">
                   <div
                     class="absolute left-0 md:-left-11 lg:-left-[54px] bg-black text-white text-lg font-bold rounded-full px-3.5 lg:px-6 py-5 lg:py-8 flex items-center justify-center md:border-[18px] border-white dark:border-[#151515]"
                   >
@@ -400,15 +406,17 @@
                     </span>
                   </div>
                   <div class="ml-[30px]">
-                    <h3 class="">Receive an Offer</h3>
+                    <h3 class="our-journey__step-heading" tabindex="0">
+                      Receive an Offer
+                    </h3>
                     <p class="max-w-[483px] mt-1 sm:mt-3 md:mt-5">
-                      We’ll send you a bespoke project proposal including
+                      We'll send you a bespoke project proposal including
                       deliverables, project roadmap, and a quote in 1-2 business
                       days.
                     </p>
                   </div>
                 </li>
-                <li class="max-w-max px-10">
+                <li class="our-journey__step max-w-max px-10" role="listitem">
                   <div
                     class="absolute left-0 md:-left-11 lg:-left-[54px] bg-black text-white text-lg font-bold rounded-full px-3.5 lg:px-6 py-5 lg:py-8 flex items-center justify-center md:border-[18px] border-white dark:border-[#151515]"
                   >
@@ -419,10 +427,12 @@
                     </span>
                   </div>
                   <div class="ml-[30px]">
-                    <h3 class="">Kickoff the Project</h3>
+                    <h3 class="our-journey__step-heading" tabindex="0">
+                      Kickoff the Project
+                    </h3>
                     <p class="max-w-[483px] mt-1 sm:mt-3 md:mt-5">
                       Sign the contract, send the deposit, lean back, and let us
-                      do our thing. We’ll invite you to a design review meeting
+                      do our thing. We'll invite you to a design review meeting
                       in 5-7 business days.
                     </p>
                   </div>
@@ -430,6 +440,12 @@
               </ul>
             </div>
           </div>
+          <!-- Screen reader announcement for active step changes -->
+          <div
+            class="our-journey__sr-announcement sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+          ></div>
         </div>
       </section>
 
@@ -2561,6 +2577,163 @@
           closeVideoModal();
         }
       });
+    </script>
+
+    <script>
+      /**
+       * Our Journey Section - Scroll-triggered Reveal Animation
+       * Uses IntersectionObserver to detect which step is closest to viewport center
+       * and applies .is-active class for fade-in animation
+       */
+      (function initOurJourneyAnimation() {
+        // Check if IntersectionObserver is available
+        if (typeof IntersectionObserver === 'undefined') {
+          // Fallback: show all steps visible without animation
+          const steps = document.querySelectorAll('.our-journey__step');
+          steps.forEach(step => {
+            step.classList.add('is-active');
+            step.style.opacity = '1';
+            step.style.transform = 'translateY(0)';
+          });
+          return;
+        }
+
+        // Check for prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        const section = document.querySelector('.our-journey');
+        if (!section) return;
+
+        const steps = section.querySelectorAll('.our-journey__step');
+        const srAnnouncement = section.querySelector('.our-journey__sr-announcement');
+        
+        if (steps.length === 0) return;
+
+        // If reduced motion is preferred, show all steps statically
+        if (prefersReducedMotion) {
+          steps.forEach(step => {
+            step.classList.add('is-active');
+            step.setAttribute('aria-current', 'true');
+          });
+          return;
+        }
+
+        // Track which step is currently active
+        let activeStepIndex = -1;
+
+        /**
+         * Calculate the distance from viewport center to step center
+         * Returns the distance (positive = below center, negative = above center)
+         */
+        function getDistanceFromCenter(element) {
+          const rect = element.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          const elementCenter = rect.top + rect.height / 2;
+          return elementCenter - viewportCenter;
+        }
+
+        /**
+         * Find the step closest to the viewport center
+         */
+        function findClosestStep() {
+          let closestStep = null;
+          let closestDistance = Infinity;
+
+          steps.forEach((step, index) => {
+            const distance = Math.abs(getDistanceFromCenter(step));
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestStep = { element: step, index: index, distance: distance };
+            }
+          });
+
+          return closestStep;
+        }
+
+        /**
+         * Update active step and apply animations
+         */
+        function updateActiveStep(newIndex) {
+          if (newIndex === activeStepIndex) return;
+
+          // Remove active class from all steps
+          steps.forEach((step, index) => {
+            step.classList.remove('is-active');
+            step.removeAttribute('aria-current');
+          });
+
+          // Add active class to new step
+          if (newIndex >= 0 && newIndex < steps.length) {
+            const newActiveStep = steps[newIndex];
+            newActiveStep.classList.add('is-active');
+            newActiveStep.setAttribute('aria-current', 'step');
+
+            // The line connecting to the next step is automatically shown by CSS
+            // .our-journey__step.is-active:not(:last-child)::after
+
+            // Announce to screen readers
+            if (srAnnouncement) {
+              const heading = newActiveStep.querySelector('.our-journey__step-heading');
+              if (heading) {
+                srAnnouncement.textContent = `Step ${newIndex + 1}: ${heading.textContent}`;
+              }
+            }
+
+            activeStepIndex = newIndex;
+          }
+        }
+
+        /**
+         * IntersectionObserver callback
+         * Uses threshold array to detect when steps enter/exit viewport
+         */
+        const observerOptions = {
+          root: null, // viewport
+          rootMargin: '-40% 0px -40% 0px', // Center 20% of viewport
+          threshold: [0, 0.25, 0.5, 0.75, 1]
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          // Find the step closest to center
+          const closest = findClosestStep();
+          if (closest) {
+            updateActiveStep(closest.index);
+          }
+        }, observerOptions);
+
+
+
+        // Observe all steps
+        steps.forEach(step => {
+          observer.observe(step);
+        });
+
+        // Initial check on load
+        const initialClosest = findClosestStep();
+        if (initialClosest) {
+          updateActiveStep(initialClosest.index);
+        }
+
+        // Also check on scroll for better responsiveness
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const closest = findClosestStep();
+            if (closest) {
+              updateActiveStep(closest.index);
+            }
+          }, 50); // Throttle scroll events
+        }, { passive: true });
+
+        // Recalculate on resize
+        window.addEventListener('resize', () => {
+          const closest = findClosestStep();
+          if (closest) {
+            updateActiveStep(closest.index);
+          }
+        }, { passive: true });
+      })();
     </script>
 
   </body>

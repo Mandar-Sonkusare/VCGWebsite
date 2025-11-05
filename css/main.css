@@ -10292,3 +10292,233 @@ ke service cards more rounded */
   color: #000 !important;
   transform: scale(1.05);
 }
+
+/* ============================================
+   Our Journey Section - Scroll-triggered Reveal Animation
+   ============================================ */
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Our Journey Section Layout */
+.our-journey {
+  scroll-margin-top: 2rem; /* Ensures title is visible when scrolling stops */
+  scroll-behavior: smooth;
+}
+
+.our-journey__wrapper {
+  position: relative;
+}
+
+/* Steps Container */
+.our-journey__steps-container {
+  position: relative;
+}
+
+.our-journey__steps {
+  position: relative;
+}
+
+/* Line below each step (connecting downward) */
+.our-journey__step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 0; /* Mobile: align with left edge of circle */
+  top: calc(100% - 1rem); /* Start closer to the step circle to match above line spacing */
+  width: 2px;
+  height: 2.5rem; /* Original height restored */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 40%,
+    rgba(255, 255, 255, 0.3) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+}
+
+/* Line above each step (connecting upward) */
+.our-journey__step:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: 0; /* Mobile: align with left edge of circle */
+  bottom: 100%; /* Start from the edge of the step circle */
+  width: 2px;
+  height: 2.5rem; /* Original height restored */
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 40%,
+    rgba(255, 255, 255, 0.3) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+}
+
+/* Adjust line position for medium screens */
+@media (min-width: 768px) {
+  .our-journey__step:not(:last-child)::after {
+    left: -8px; /* Center of circle: -44px (position) + 18px (border) + 14px (padding) + 4px (half content) */
+    top: calc(100% - 2rem); /* Start closer to step circle to match above line spacing */
+    height: 7rem; /* Original height restored */
+  }
+  
+  .our-journey__step:not(:first-child)::before {
+    left: -8px; /* Same positioning as after */
+    bottom: 100%; /* Start from edge of step circle */
+    height: 7rem; /* Original height restored */
+  }
+}
+
+/* Adjust line position for large screens */
+@media (min-width: 1024px) {
+  .our-journey__step:not(:last-child)::after {
+    left: -4px; /* Center of circle: -52px (position) + 18px (border) + 24px (padding) + 6px (half content) */
+    top: calc(100% - 2rem); /* Start closer to step circle to match above line spacing */
+    height: 7rem; /* Original height restored */
+  }
+  
+  .our-journey__step:not(:first-child)::before {
+    left: -4px; /* Same positioning as after */
+    bottom: 100%; /* Start from edge of step circle */
+    height: 7rem; /* Original height restored */
+  }
+}
+
+/* Adjust line position for extra large screens */
+@media (min-width: 1280px) {
+  .our-journey__step:not(:last-child)::after {
+    left: -4px; /* Center of circle */
+    top: calc(100% - 3rem); /* Start closer to step circle to match above line spacing */
+    height: 170px; /* Original height restored */
+  }
+  
+  .our-journey__step:not(:first-child)::before {
+    left: -4px; /* Same positioning as after */
+    bottom: 100%; /* Start from edge of step circle */
+    height: 170px; /* Original height restored */
+  }
+}
+
+/* Dark mode lines */
+.dark .our-journey__step:not(:last-child)::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.2) 70%,
+    transparent 100%
+  );
+}
+
+.dark .our-journey__step:not(:first-child)::before {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.2) 70%,
+    transparent 100%
+  );
+}
+
+/* Show lines when step is active */
+.our-journey__step.is-active:not(:last-child)::after {
+  opacity: 1; /* Show line below */
+}
+
+.our-journey__step.is-active:not(:first-child)::before {
+  opacity: 1; /* Show line above */
+}
+
+
+
+/* Sticky Image - Desktop only */
+@media (min-width: 769px) {
+  .our-journey__image.sticky {
+    position: sticky;
+    top: 15rem; /* Activate sticky behavior immediately when section reaches top */
+    align-self: flex-start;
+    z-index: 1;
+  }
+}
+
+/* Mobile: Image not sticky, normal flow */
+@media (max-width: 768px) {
+  .our-journey__image.sticky {
+    position: static;
+  }
+  
+  /* Hide connecting lines on mobile */
+  .our-journey__step:not(:last-child)::after,
+  .our-journey__step:not(:first-child)::before {
+    display: none;
+  }
+}
+
+/* Steps Container */
+.our-journey__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual Step - Initial State (Hidden) */
+.our-journey__step {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Active Step - Visible */
+.our-journey__step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .our-journey__step {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+  
+  .our-journey__step.is-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .our-journey__step:not(:last-child)::after,
+  .our-journey__step:not(:first-child)::before {
+    transition: none;
+    opacity: 1;
+  }
+}
+
+/* Step Heading - Keyboard Focus Styles */
+.our-journey__step-heading:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Active Step Indicator via aria-current */
+.our-journey__step[aria-current="step"] {
+  /* Visual indicator can be added here if needed */
+}
