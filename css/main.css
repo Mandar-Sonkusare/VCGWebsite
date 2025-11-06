@@ -10235,7 +10235,119 @@ button[type="submit"]:not(.rv-button) {
 .dark .service-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(12, 229, 216, 0.3);
   border-color: rgba(12, 229, 216, 0.4);
-}/* Fix 
+}
+
+/* Metrics Marquee Section Styles */
+.metrics-marquee-section {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.metrics-marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  padding: 30px 0;
+  position: relative;
+}
+
+.metrics-marquee-section.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.metrics-marquee-inner {
+  display: flex;
+  gap: 80px;
+  width: fit-content;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  animation: metricsMarquee 40s linear infinite;
+  padding: 0 40px;
+}
+
+@keyframes metricsMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.metric-card {
+  flex-shrink: 0;
+  min-width: 220px;
+  width: 220px;
+  padding: 35px 25px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transform-origin: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.metric-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #FFFFFF;
+  line-height: 1;
+  font-family: sans-serif;
+}
+
+.metric-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  font-family: sans-serif;
+}
+
+.metric-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px rgba(12, 229, 216, 0.2);
+  border-color: rgba(12, 229, 216, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.dark .metric-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(12, 229, 216, 0.3);
+  border-color: rgba(12, 229, 216, 0.4);
+}
+
+@media (max-width: 768px) {
+  .metrics-marquee-inner {
+    gap: 50px;
+    padding: 0 20px;
+  }
+  
+  .metric-card {
+    min-width: 180px;
+    width: 180px;
+    padding: 28px 20px;
+  }
+  
+  .metric-value {
+    font-size: 36px;
+  }
+  
+  .metric-label {
+    font-size: 10px;
+  }
+}
+
+/* Fix 
 for service cards overflow on edges */
 .grid {
   overflow: hidden;
