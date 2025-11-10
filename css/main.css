@@ -10318,7 +10318,7 @@ button[type="submit"]:not(.rv-button) {
 
 .metrics-marquee-inner {
   display: flex;
-  gap: 80px;
+  gap: 40px;
   width: fit-content;
   flex-wrap: nowrap;
   white-space: nowrap;
@@ -10338,9 +10338,9 @@ button[type="submit"]:not(.rv-button) {
 
 .metric-card {
   flex-shrink: 0;
-  min-width: 220px;
-  width: 220px;
-  padding: 35px 25px;
+  min-width: 260px;
+  width: 260px;
+  padding: 40px 30px;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -10389,14 +10389,14 @@ button[type="submit"]:not(.rv-button) {
 
 @media (max-width: 768px) {
   .metrics-marquee-inner {
-    gap: 50px;
+    gap: 30px;
     padding: 0 20px;
   }
 
   .metric-card {
-    min-width: 180px;
-    width: 180px;
-    padding: 28px 20px;
+    min-width: 200px;
+    width: 200px;
+    padding: 32px 24px;
   }
 
   .metric-value {
