@@ -337,6 +337,7 @@ input:where([type='reset']),
 input:where([type='submit']) {
   -webkit-appearance: button;
   /* 1 */
+  appearance: button;
   background-color: transparent;
   /* 2 */
   background-image: none;
@@ -379,6 +380,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
 [type='search'] {
   -webkit-appearance: textfield;
   /* 1 */
+  appearance: textfield;
   outline-offset: -2px;
   /* 2 */
 }
@@ -508,8 +510,6 @@ embed,
 object {
   display: block;
   /* 1 */
-  vertical-align: middle;
-  /* 2 */
 }
 
 /*
@@ -4874,7 +4874,7 @@ html.lenis {
 }
 
 @keyframes marqueeAni {
-  0 {
+  0% {
     --tw-translate-x: 0px;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
@@ -6028,6 +6028,7 @@ canvas {
 .footer-text {
   background: -webkit-radial-gradient(#fff, #101010);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent
 }
 
@@ -10713,4 +10714,5 @@ ke service cards more rounded */
 /* Active Step Indicator via aria-current */
 .our-journey__step[aria-current="step"] {
   /* Visual indicator can be added here if needed */
+  opacity: 1;
 }
