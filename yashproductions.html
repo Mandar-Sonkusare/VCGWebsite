@@ -131,7 +131,7 @@
         padding: 30px 40px;
         border-radius: 50px;
         background: rgba(255, 255, 255, 0.8);
-        border: 2px solid rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(0, 0, 0, 0.6);
         transition: all 0.3s ease;
       }
 
@@ -169,7 +169,7 @@
       .interest-btn {
         display: inline-block;
         padding: 12px 24px;
-        border: 2px solid rgba(0, 0, 0, 0.2);
+        border: 2px solid rgba(0, 0, 0, 0.6);
         background: transparent;
         color: #000;
         cursor: pointer;
@@ -204,6 +204,15 @@
 
       .interest-btn:hover:is(.dark *) {
         border-color: #fff;
+      }
+
+      /* Service Card Subservice Tags */
+      .service-card span {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+      }
+
+      .service-card span:is(.dark *) {
+        border-color: rgba(255, 255, 255, 0.1);
       }
     </style>
 
@@ -689,7 +698,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-me pb-8">
       
       <!-- Web & UX Design Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Web & UX Design</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Crafting seamless digital experiences that look great and perform even better.
@@ -703,7 +712,7 @@
       </div>
 
       <!-- Strategy & Research Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Strategy & Research</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Building data-driven strategies that align brand goals with real audience needs.
@@ -717,7 +726,7 @@
       </div>
 
       <!-- Advertising & Lead Generation Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Advertising & Lead Generation</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Designing campaigns that attract attention and turn viewers into leads.
@@ -731,7 +740,7 @@
       </div>
 
       <!-- Content & Copywriting Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Content & Copywriting</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Creating words and visuals that tell your story and sell your brand.
@@ -745,7 +754,7 @@
       </div>
 
       <!-- Product Design Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Product Design</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Turning ideas into polished, launch-ready digital products.
@@ -759,7 +768,7 @@
       </div>
 
       <!-- Social Media Marketing Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Social Media Marketing</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Growing audiences through creative content and consistent engagement.
@@ -773,7 +782,7 @@
       </div>
 
       <!-- Graphic Design Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Graphic Design</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Clean, bold visuals for web, social and print.
@@ -787,7 +796,7 @@
       </div>
 
       <!-- Photography Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Photography</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           High-quality photos for products, people, and events.
@@ -801,7 +810,7 @@
       </div>
 
       <!-- Videography Card -->
-      <div class="service-card bg-white dark:bg-dark border border-secondary/10 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
+      <div class="service-card bg-white dark:bg-dark border border-black/60 dark:border-backgroundBody/10 p-6 rounded-3xl transition-all duration-300">
         <h3 class="text-2xl font-medium mb-3 text-center">Videography</h3>
         <p class="text-colorText text-base mb-4 leading-relaxed text-center">
           Cinematic videos and social-first film content.

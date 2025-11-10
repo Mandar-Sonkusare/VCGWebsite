@@ -10270,17 +10270,31 @@ button[type="submit"]:not(.rv-button) {
 .service-card {
   cursor: pointer;
   transform-origin: center;
+  border: 2px solid rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark .service-card {
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .service-card:hover {
   transform: scale(1.05);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 30px rgba(12, 229, 216, 0.2);
-  border-color: rgba(12, 229, 216, 0.3);
+  border-color: rgba(12, 229, 216, 0.3) !important;
 }
 
 .dark .service-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(12, 229, 216, 0.3);
-  border-color: rgba(12, 229, 216, 0.4);
+  border-color: rgba(12, 229, 216, 0.4) !important;
+}
+
+/* Service Card Subservice Tags */
+.service-card span {
+  border: 2px solid rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark .service-card span {
+  border: 2px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Metrics Marquee Section Styles */
