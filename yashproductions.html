@@ -214,6 +214,51 @@
       .service-card span:is(.dark *) {
         border-color: rgba(255, 255, 255, 0.1);
       }
+
+      /* Project Image Rotation Styles */
+      .our-projects {
+        overflow: visible;
+      }
+      
+      .project-item {
+        overflow: visible;
+        transition: transform 0.3s ease;
+      }
+
+      .project-item:hover {
+        transform: translateY(-5px);
+      }
+      
+      .project-image-wrapper {
+        overflow: visible;
+      }
+      
+      .project-image-wrapper.reveal-me {
+        overflow: visible !important;
+      }
+      
+      .project-image-container {
+        position: relative;
+        overflow: hidden;
+        transform: none !important;
+        width: 100%;
+      }
+
+      .project-image {
+        transition: opacity 1s ease-in-out;
+        transform: none !important;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+      
+      /* Ensure project titles are always visible */
+      .project-item h3 {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
     </style>
 
     <!--Favicon-->
@@ -483,6 +528,71 @@
               <div class="metric-value">85+</div>
               <div class="metric-label">TEAM MEMBERS</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Projects Section -->
+      <section class="our-projects pt-8 md:pt-10 lg:pt-12 xl:pt-14 pb-8 md:pb-10 lg:pb-12 xl:pb-14">
+        <div class="container">
+          <div class="text-center mb-10 md:mb-20">
+            <div class="rv-badge mb-5 md:mb-8 reveal-me">
+              <span class="rv-badge-text">Our Projects</span>
+            </div>
+            <h2 class="text-appear">Featured Work</h2>
+          </div>
+
+          <!-- Projects Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
+            
+            <!-- Project 1: USASBE '24 -->
+            <div class="project-item">
+              <div class="project-image-wrapper reveal-me">
+                <div class="project-image-container relative overflow-hidden rounded-3xl bg-gray-100 dark:bg-gray-800" style="aspect-ratio: 16/9;">
+                  <img src="images/process-img-01.png" alt="USASBE '24 - Image 1" class="project-image w-full h-full object-cover">
+                  <img src="images/process-img-01.png" alt="USASBE '24 - Image 2" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                  <img src="images/process-img-01.png" alt="USASBE '24 - Image 3" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                </div>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-semibold mt-6 text-center">USASBE '24</h3>
+            </div>
+
+            <!-- Project 2: USASBE '25 -->
+            <div class="project-item">
+              <div class="project-image-wrapper reveal-me">
+                <div class="project-image-container relative overflow-hidden rounded-3xl bg-gray-100 dark:bg-gray-800" style="aspect-ratio: 16/9;">
+                  <img src="images/process-img-01.png" alt="USASBE '25 - Image 1" class="project-image w-full h-full object-cover">
+                  <img src="images/process-img-01.png" alt="USASBE '25 - Image 2" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                  <img src="images/process-img-01.png" alt="USASBE '25 - Image 3" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                </div>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-semibold mt-6 text-center">USASBE '25</h3>
+            </div>
+
+            <!-- Project 3: Graduation -->
+            <div class="project-item">
+              <div class="project-image-wrapper reveal-me">
+                <div class="project-image-container relative overflow-hidden rounded-3xl bg-gray-100 dark:bg-gray-800" style="aspect-ratio: 16/9;">
+                  <img src="images/process-img-01.png" alt="Graduation - Image 1" class="project-image w-full h-full object-cover">
+                  <img src="images/process-img-01.png" alt="Graduation - Image 2" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                  <img src="images/process-img-01.png" alt="Graduation - Image 3" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                </div>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-semibold mt-6 text-center">Graduation</h3>
+            </div>
+
+            <!-- Project 4: Football -->
+            <div class="project-item">
+              <div class="project-image-wrapper reveal-me">
+                <div class="project-image-container relative overflow-hidden rounded-3xl bg-gray-100 dark:bg-gray-800" style="aspect-ratio: 16/9;">
+                  <img src="images/process-img-01.png" alt="Football - Image 1" class="project-image w-full h-full object-cover">
+                  <img src="images/process-img-01.png" alt="Football - Image 2" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                  <img src="images/process-img-01.png" alt="Football - Image 3" class="project-image w-full h-full object-cover absolute top-0 left-0 opacity-0">
+                </div>
+              </div>
+              <h3 class="text-2xl md:text-3xl font-semibold mt-6 text-center">Football</h3>
+            </div>
+
           </div>
         </div>
       </section>
@@ -2917,6 +3027,63 @@
             updateActiveStep(closest.index);
           }
         }, { passive: true });
+      })();
+    </script>
+
+    <script>
+      /**
+       * Project Image Rotation
+       * Rotates through 3 images for each project every 3-4 seconds
+       */
+      (function initProjectImageRotation() {
+        const projectContainers = document.querySelectorAll('.project-image-container');
+        
+        projectContainers.forEach(container => {
+          const images = container.querySelectorAll('.project-image');
+          if (images.length <= 1) return;
+          
+          let currentIndex = 0;
+          
+          // Set first image as visible
+          images[0].style.opacity = '1';
+          
+          // Rotate images every 3.5 seconds
+          setInterval(() => {
+            // Fade out current image
+            images[currentIndex].style.opacity = '0';
+            
+            // Move to next image
+            currentIndex = (currentIndex + 1) % images.length;
+            
+            // Fade in next image
+            images[currentIndex].style.opacity = '1';
+          }, 3500); // 3.5 seconds
+        });
+      })();
+      
+      /**
+       * Fix reveal-me rotation for project image wrappers
+       * Remove rotation after GSAP animation completes
+       */
+      (function fixProjectRevealAnimation() {
+        // Wait for page to load
+        setTimeout(() => {
+          const projectWrappers = document.querySelectorAll('.project-image-wrapper.reveal-me');
+          
+          // Continuously remove rotation from project image wrappers
+          const removeRotation = () => {
+            projectWrappers.forEach(wrapper => {
+              const currentTransform = wrapper.style.transform || '';
+              if (currentTransform.includes('rotate')) {
+                // Remove only the rotate part, keep other transforms
+                wrapper.style.transform = currentTransform.replace(/rotate\([^)]*\)/g, 'rotate(0deg)');
+              }
+            });
+          };
+          
+          // Run frequently to catch GSAP animations
+          setInterval(removeRotation, 50);
+        }, 500);
       })();
     </script>
 
