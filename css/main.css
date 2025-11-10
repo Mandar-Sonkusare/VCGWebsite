@@ -11242,11 +11242,12 @@ ke service cards more rounded */
 .cert-logo { width: 150px; min-width: 150px; height: 90px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease; transform: none !important; }
 .cert-logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; opacity: 1; filter: brightness(1.1); transform: none !important; }
 .cert-logo::before { display: none !important; }
+.cert-logo::after { display: none !important; }
+.cert-logo:hover { transform: scale(1.08) !important; filter: none !important; box-shadow: none !important; background: none !important; }
+.cert-logo:hover img { transform: none !important; filter: brightness(1.1) !important; }
 @media (min-width: 1024px) {
   .certifications-wrapper { overflow: visible; }
   .certifications-grid { justify-content: center; animation: none; gap: 5rem; }
   .cert-logo { width: 210px; min-width: 210px; height: 115px; }
-  .cert-logo:hover { transform: scale(1.08) !important; filter: none !important; box-shadow: none !important; }
-  .cert-logo:hover img { transform: none !important; filter: brightness(1.1) !important; }
   .cert-logo:nth-child(n+6) { display: none !important; }
 }
