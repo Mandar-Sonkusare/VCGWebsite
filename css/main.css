@@ -11236,26 +11236,42 @@ ke service cards more rounded */
 
 
 /* CERTIFICATIONS - FINAL VERSION */
-.certifications-wrapper { overflow: hidden; width: 100%; }
+.certifications-wrapper { overflow: visible !important; width: 100%; }
 .certifications-grid { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: flex-start; gap: 2rem; animation: certMarquee 30s linear infinite; }
 @keyframes certMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .cert-item { display: flex; flex-direction: column; align-items: center; gap: 1rem; flex-shrink: 0; }
-.cert-logo { width: 150px; min-width: 150px; height: 90px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease; transform: none !important; }
+.cert-logo { width: 150px; min-width: 150px; height: 90px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease; transform: none !important; overflow: visible !important; }
 .cert-logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; opacity: 1; filter: brightness(1.1); transform: none !important; }
 .cert-logo::before { display: none !important; }
 .cert-logo::after { display: none !important; }
-.cert-item:hover .cert-logo { transform: scale(1.08) !important; filter: none !important; box-shadow: none !important; background: none !important; }
+.cert-item:hover .cert-logo { transform: scale(1.08) !important; filter: none !important; box-shadow: none !important; background: none !important; overflow: visible !important; }
 .cert-item:hover .cert-logo img { transform: none !important; filter: brightness(1.1) !important; }
 .cert-title { color: #000; font-size: 14px; font-weight: 700; text-align: center; margin: 0; text-transform: uppercase; letter-spacing: 1px; font-family: "Satoshi", sans-serif; }
 .dark .cert-title { color: #fff; }
 @media (min-width: 1024px) {
-  .certifications-wrapper { overflow: visible; }
-  .certifications-grid { justify-content: center; animation: none; gap: 5rem; }
-  .cert-logo { width: 210px; min-width: 210px; height: 115px; }
+  .certifications-wrapper { overflow: visible !important; }
+  .certifications-grid { justify-content: center; animation: none; gap: 4rem; }
+  .cert-logo { width: 240px; min-width: 240px; height: 130px; }
   .cert-title { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
   .cert-item:nth-child(n+6) { display: none !important; }
 }
 
+/* Make 5th certification logo bigger */
+@media (min-width: 1024px) {
+  .cert-item:nth-child(5) .cert-logo {
+    width: 420px !important;
+    min-width: 420px !important;
+    height: 220px !important;
+    margin-left: -90px !important;
+    margin-right: -90px !important;
+  }
+}
 
 
-
+/* Fix overflow clipping on certification section */
+.certifications-wrapper,
+.certifications-grid,
+.cert-item,
+.cert-logo {
+  overflow: visible !important;
+}
