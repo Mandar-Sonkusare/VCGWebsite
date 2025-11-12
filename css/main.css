@@ -11269,9 +11269,16 @@ ke service cards more rounded */
 
 
 /* Fix overflow clipping on certification section */
-.certifications-wrapper,
-.certifications-grid,
-.cert-item,
-.cert-logo {
-  overflow: visible !important;
+.certifications-wrapper {
+  overflow: hidden !important;
 }
+
+@media (min-width: 1024px) {
+  .certifications-wrapper,
+  .certifications-grid,
+  .cert-item,
+  .cert-logo {
+    overflow: visible !important;
+  }
+}
+
